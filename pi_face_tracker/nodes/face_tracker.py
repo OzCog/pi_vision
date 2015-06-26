@@ -263,7 +263,6 @@ class FaceBox():
         p = Point()
         # same FOV for both, so calculate the relative distance of one pixel
         dp = 0.22 / float(self.bounding_size) # It should be same in both axis
-        # rospy.logwarn("bbox size=" + str(self.bounding_size))
         w = self.camera_width/2
         h = self.camera_height/2
         # Y is to the left in camera image, Z is to top
@@ -292,7 +291,6 @@ class FaceBox():
         pha = self.x_smooth_factor
         bet = 1.0 - pha
         p.x = pha * self.loc_3d.x + bet * p.x
-        # rospy.logwarn("raw x=" + str(rawx) + " filtered x=" + str(p.x))
 
         self.loc_3d = p
 
@@ -557,7 +555,6 @@ class PatchTracker(ROS2OpenCV):
                 else:
                     face.expand_roi = self.expand_roi_init
         self.detect_box.nextFrame(haar)
-        rospy.loginfo(self.detect_box.faces)
         self.detect_box.publish_faces()
         return cv_image
 
@@ -725,22 +722,6 @@ class PatchTracker(ROS2OpenCV):
             else:
                 feature_box = None
 
-            """ Publish the ROI for the tracked object """
-            # try:
-            #     (roi_center, roi_size, roi_angle) = feature_box
-            # except:
-            #     rospy.loginfo("Patch box has shrunk to zeros...")
-            #     feature_box = None
-
-            # if feature_box and not self.drag_start and self.is_rect_nonzero(face.track_box):
-            #     self.ROI = RegionOfInterest()
-            #     self.ROI.x_offset = min(self.image_size[0], max(0, int(roi_center[0] - roi_size[0] / 2)))
-            #     self.ROI.y_offset = min(self.image_size[1], max(0, int(roi_center[1] - roi_size[1] / 2)))
-            #     self.ROI.width = min(self.image_size[0], int(roi_size[0]))
-            #     self.ROI.height = min(self.image_size[1], int(roi_size[1]))
-
-            # self.pubROI.publish(self.ROI)
-
 
         if feature_box is not None and len(face.features) > 0:
             return feature_box
@@ -760,7 +741,7 @@ class PatchTracker(ROS2OpenCV):
         try:
             ((x,y), (w,h), a) = face.track_box
         except:
-            rospy.loginfo("Track box has shrunk to zero...")
+            rospy.logdebug("Track box has shrunk to zero...")
             return
 
         """ Expand the track box to look for new features """
