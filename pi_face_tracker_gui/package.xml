@@ -18,19 +18,16 @@
   <!-- Dependencies needed to compile this package. -->
   <build_depend>rospy</build_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>mjpeg_server</build_depend>
   <build_depend>pi_face_tracker</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
   <run_depend>rospy</run_depend>
   <run_depend>roscpp</run_depend>
-  <run_depend>mjpeg_server</run_depend>
   <run_depend>pi_face_tracker</run_depend>
 
   <!-- Dependencies needed only for running tests. -->
   <!-- <test_depend>rospy</test_depend> -->
   <!-- <test_depend>roscpp</test_depend> -->
-  <!-- <test_depend>mjpeg_server</test_depend> -->
   <!-- <test_depend>pi_face_tracker</test_depend> -->
 
 </package>

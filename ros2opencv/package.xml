@@ -23,8 +23,6 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>cv_bridge</build_depend>
   <build_depend>image_transport</build_depend>
-  <build_depend>openni_camera</build_depend>
-  <build_depend>uvc_cam</build_depend>
 
   <!-- Dependencies needed after this package is compiled. -->
   <run_depend>roscpp</run_depend>
@@ -33,8 +31,6 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>cv_bridge</run_depend>
   <run_depend>image_transport</run_depend>
-  <run_depend>openni_camera</run_depend>
-  <run_depend>usb_cam</run_depend>
 
   <!-- Dependencies needed only for running tests. -->
   <!-- <test_depend>roscpp</test_depend> -->
@@ -43,7 +39,5 @@
   <!-- <test_depend>sensor_msgs</test_depend> -->
   <!-- <test_depend>cv_bridge</test_depend> -->
   <!-- <test_depend>image_transport</test_depend> -->
-  <!-- <test_depend>openni_camera</test_depend> -->
-  <!-- <test_depend>uvc_cam</test_depend> -->
 
 </package>
