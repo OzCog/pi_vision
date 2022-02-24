@@ -1,7 +1,7 @@
 pi_vision
 =========
 
-Pi Vision ported to ROS Indigo, together with various enhancements:
+Pi Vision ported to ROS Noetic, together with various enhancements:
 * Its been catkinized.
 * Can track multiple faces.
 * Attempts to perform localization in 3D, so that face positons are now
