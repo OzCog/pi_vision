@@ -12,8 +12,9 @@ http://wiki.ros.org/pi_vision, which had been abandonded after groovy.
 This package includes both includes http://wiki.ros.org/pi_face_tracker
 and http://wiki.ros.org/pi_face_tracker_gui
 
-The plain, unenhanced  port of pi_vision to indigo can be found in the
-branch `pi-vision-orig-indigo`.
+The plain, unenhanced  port of `pi_vision` to Indigo is tagged with the
+tag `orig-indigo-port`. The final version of the Indigo port is tagged
+with `ros-indigo`. The `master` branch is current for Noetic.
 
 
 Installation
@@ -26,8 +27,7 @@ apt-get install ros-indigo-cv-bridge ros-indigo-image-transport
 The node must be built from git:
 
 ```
-
-git clone https://github.com/hansonrobotics/pi_vision
+git clone https://github.com/opencog/pi_vision
 cd catkin; catkin build
 source devel/setup.bash
 ```
@@ -35,10 +35,10 @@ source devel/setup.bash
 Run
 ===
 
-To change camera settings modify the usb_cam.launch file.
+To change camera settings, modify the `usb_cam.launch` file.
 
 ```
-roslaunch ros2opencv usb_cam.launch 
+roslaunch ros2opencv usb_cam.launch
 roslaunch pi_face_tracker face_tracker_usb_cam.launch
 ```
 
