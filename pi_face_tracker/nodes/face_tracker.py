@@ -7,8 +7,10 @@
     the face, then track the face features over subsequent frames.
 
     This is a complete re-write of the original face tracker. The original
-    was written in Python2 for ROS indigo and used packages not available
-    in ROS noetic. The basis of this one was taken from
+    was written in Python2 for ROS indigo and implmmented manual face tracking.
+    The newer opencv2 that is available via the ros-noetic-cv-bridge is used in
+    combination with the dlib library to do face tracking.
+    The basis of this was taken from:
     https://github.com/shantnu/PyEng/blob/master/Image_Video/face_detect.py
     https://github.com/gdiepen/face-recognition.git
 
@@ -163,6 +165,7 @@ class ROS2OpenCV:
         """ abstract call not implemented: was converting image to grey scale and returning it"""
         return 0
 
+    # calculate cycles per sec and display with resolution on image
     def calc_cps(self, image):
         duration = rospy.Time.now() - self.start
         duration = duration.to_sec()
@@ -203,7 +206,9 @@ class ROS2OpenCV:
     perforrmed.  The 2D tracking is done in camera pixel coords, the
     3D position information is guesstimated from that. NOTE: this is a 
     rewrite of the original class. Its main purpose now is to support 
-    the 3D point for publishing the FACE topic. HAAR tracking is no longer supported.
+    the 3D point for publishing the FACE topic. The original manual HAAR tracking is no 
+    longer implemented, instead CV2 now takes care of it (see use of CascadeClassifier in FaceTracker).
+    Currently the "name" attribute is only used for display purposes.
     markwigzell@gmail.com
 '''
 class FaceBox():
@@ -313,7 +318,6 @@ class FaceBox():
 
         # x (distance from camera) gets a much stronger filter,
         # since its much noisier.
-        # rawx = p.x
         pha = self.x_smooth_factor
         bet = 1.0 - pha
         p.x = pha * self.loc_3d.x + bet * p.x
@@ -336,7 +340,6 @@ class FaceBox():
 
 """ This replaces the original PatchTracker and the FacesRegistry classes.
     Basically used them where possible, so some of the original functions are honoured. 
-    This is still a WIP
 """
 class FaceTracker(ROS2OpenCV):
     TOPIC_EVENT = "face_event"
@@ -371,11 +374,6 @@ class FaceTracker(ROS2OpenCV):
         self.expand_roi = self.expand_roi_init
 
         self.camera_frame_id = "kinect_depth_optical_frame"
-
-        self.cog_x = self.cog_y = 0
-        self.cog_z = -1
-
-        #self.detect_box = FacesRegistry()
 
         """ Set up the face detection parameters """
         self.cascade_frontal_alt = rospy.get_param("~cascade_frontal_alt", "")
@@ -464,7 +462,9 @@ class FaceTracker(ROS2OpenCV):
         msg.faces = faces
         self.faces_pub.publish(msg)
 
-    # We are not doing really face recognition
+    # We are not doing face recognition yet, but this is where we
+    # could do a face lookup against already memorized faces in order
+    # to recognize the "new_face".
     def doRecognizePerson(self, fid, box):
         time.sleep(2)
         x, y, w, h = box
@@ -642,16 +642,6 @@ class FaceTracker(ROS2OpenCV):
         return KeyCommandResponse()
 
 def main(args):
-    """ Display a help message if appropriate """
-    help_message = "Hot keys: \n" \
-                   "\tq - quit the program\n" \
-                   "\tc - delete current features\n" \
-                   "\tt - toggle text captions on/off\n" \
-                   "\tf - toggle display of features on/off\n" \
-                   "\tn - toggle \"night\" mode on/off\n" \
-                   "\ta - toggle auto face tracking on/off\n"
-
-    print(help_message)
 
     """ Fire up the Face Tracker node """
     FT = FaceTracker("pi_face_tracker")
@@ -664,5 +654,3 @@ def main(args):
 
 if __name__ == "__main__":
     main(sys.argv)
-
-##############################
