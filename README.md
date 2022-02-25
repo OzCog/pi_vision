@@ -58,7 +58,7 @@ track, the second, that a face is no longer visible.
 
 TODO
 ====
-1. Implement face recognition on a "new_face"
+1. Implement face recognition on a "new_face".
 2. face_tracker.py has own copy of ROS2OpenCV class from ros2opencv package: 
 merge the own copy back and fix the reference so it works again. (Python3 changed
 the way other python modules are bound) 
