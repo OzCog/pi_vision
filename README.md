@@ -9,7 +9,7 @@ Pi Vision ported to ROS Noetic, together with various enhancements:
 
 This is based on the original Pi Vision package, taken from
 http://wiki.ros.org/pi_vision, which had been abandonded after groovy.
-This package includes both includes http://wiki.ros.org/pi_face_tracker
+This package includes both http://wiki.ros.org/pi_face_tracker
 and http://wiki.ros.org/pi_face_tracker_gui
 
 The plain, unenhanced  port of `pi_vision` to Indigo is tagged with the
@@ -21,7 +21,7 @@ Installation
 ============
 
 ```
-apt-get install ros-indigo-cv-bridge ros-indigo-image-transport
+apt-get install ros-noetic-cv-bridge ros-noetic-image-transport
 ```
 
 The node must be built from git:
@@ -58,6 +58,8 @@ track, the second, that a face is no longer visible.
 
 TODO
 ====
-1. Make it work with Kinect.
-2. Migrate to Python cv2 wrappers from cv.  The cv wrappers use a
-   c++-like interface, the cv2 wrappers use numpy and are more efficient.
+1. Implement face recognition on a "new_face"
+2. face_tracker.py has own copy of ROS2OpenCV class from ros2opencv package: 
+merge the own copy back and fix the reference so it works again. (Python3 changed
+the way other python modules are bound) 
+
